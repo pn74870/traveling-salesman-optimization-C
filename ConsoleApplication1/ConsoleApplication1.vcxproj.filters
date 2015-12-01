@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
+    <ClCompile Include="matrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -23,5 +23,16 @@
     <Text Include="xy_data.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="output.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="matrix.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\Downloads\GBplaces.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

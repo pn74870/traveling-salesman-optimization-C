@@ -9,7 +9,7 @@ struct point {
 	double x, y, e;
 };
 struct fittedParameters {
-	double m, dm, c, dc, chiSquare
+	double m, dm, c, dc, chiSquare;
 };
 double interpolate(double x,point points[],int length) {
 	double deltaMin1 = points[0].x - x, deltaMin2 = points[1].x - x;
