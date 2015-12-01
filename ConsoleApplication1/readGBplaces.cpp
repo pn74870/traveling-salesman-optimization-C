@@ -7,13 +7,13 @@ using namespace std;
 
 vector<string> getVectorFromLine(string line) {
 	int end;
-	string sub,newLine=line;
+	string sub;
 	vector<string> vec;
 	do  {
-		end = newLine.find(',', 0);
-		sub = newLine.substr(0, end );
+		end = line.find(',', 0);
+		sub = line.substr(0, end );
 		vec.push_back(sub);
-		newLine = newLine.substr(end + 1, newLine.size() - end - 1);
+		line = line.substr(end + 1, line.size() - end - 1);
 	} while (end != -1);
 	return vec;
 }
@@ -33,10 +33,12 @@ int main() {
 		}
 
 		file.close();
+		FILE *output=fopen ("output.txt","w");
 		for (int i = 0; i < data.size(); i++) {
-			for (int j = 0; j < data[i].size(); j++) cout << data[i][j] << " ";
-			cout << "\n";
+			for (int j = 0; j < data[i].size(); j++) fprintf(output,"%10.1f ",atof(data[i][j].c_str()));
+			fprintf(output,"\n");
 		}
+		fclose(output);
 	}
 	else cout << "No file\n";
 }
