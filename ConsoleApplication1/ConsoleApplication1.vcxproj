@@ -146,10 +146,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="optimisation.cpp" />
+    <ClCompile Include="optimisationN.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="matrix.txt" />
+    <Text Include="out.txt" />
     <Text Include="output.txt" />
     <Text Include="xy_data.txt" />
   </ItemGroup>

@@ -24,6 +24,9 @@
     <Text Include="matrix.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="out.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Downloads\GBplaces.csv">
@@ -31,7 +34,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="optimisation.cpp">
+    <ClCompile Include="optimisationN.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

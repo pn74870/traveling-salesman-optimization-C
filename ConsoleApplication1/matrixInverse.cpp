@@ -1,7 +1,7 @@
 /*InverseOfMatrix
 program reads a matrix from the file matrix.txt, stores data into two
 dimensinonal vector and writes the inverse of matrix to the file output.txt
-can also compute the determinant
+computes the determinant to check if given matrix have an inverse 
 values in the input file should be separated by space
 separation character can be changed by changing the variable named separator
 Justinas Rumbutis 01/12/2015*/
@@ -47,25 +47,54 @@ vector<vector<double>> identityMatrix(int size) {
 	}
 	return matrix;
 }
+void swapRows(vector<vector<double>> &matrix, int row1, int row2) {
+	/*swapRows
+	swaps two rows of a given matrix*/
+
+	
+	vector<double> tempVector = matrix[row1];
+	matrix[row1] = matrix[row2];
+	matrix[row2] = tempVector;
+	
+}
+
 double determinant(vector<vector<double>> matrix) {
 	/*determinant
-	function calculates the determinant of a given matrix
+	function calculates the determinant of a given matrix using Gaussian elimination
 	*/
+	double d = 1;
+	
 	for (int i = 0; i < matrix.size(); i++) {
-
+		
 		for (int k = i + 1; k < matrix.size(); k++) {
 
-			double multiplier = matrix[k][i] / matrix[i][i];
-			for (int j = 0; j < matrix[0].size(); j++) {
-				matrix[k][j] -= multiplier* matrix[i][j];
+			if (matrix[i][i] == 0) { //if the diagonal element of ith row is zero then this row has to be swapped with some other row, to have non zero diagonal element
+				bool zeroDet = true;
+				for (int m = i + 1; m < matrix.size(); m++) {
 
-
+					if (matrix[m][i] != 0) {
+						swapRows(matrix, m, i);
+						d *= -1;
+						zeroDet = false;
+						m = matrix.size();
+					}
+				}
+				if (zeroDet) return 0;
 			}
+				double multiplier = matrix[k][i] / matrix[i][i];
+			
+				for (int j = 0; j < matrix.size(); j++) {
+					matrix[k][j] -= multiplier* matrix[i][j];
+
+
+				}
+			}
+			
 		}
-	}
-	double d = 1;
-	for (int i = 0; i < matrix.size() && d!=0; i++) d *= matrix[i][i];
-	return d;
+
+		for (int i = 0; i < matrix.size() && d != 0; i++) d *= matrix[i][i];
+		return d;
+	
 }
 
 vector<vector<double>> inverseMatrix(vector<vector<double>> matrix)  {
@@ -75,7 +104,15 @@ vector<vector<double>> inverseMatrix(vector<vector<double>> matrix)  {
 	vector<vector<double>> inverse=identityMatrix(matrix.size()); //identity matrix which is initially on the RHS of the augmented matrix
 
 	for (int i = 0; i < matrix.size(); i++) { // this loops through all rows
-		double divider = matrix[i][i]; //variable which stores diagonal element
+		if (matrix[i][i] == 0) { //if the diagonal element of ith row is zero then this row has to be swapped with some other row, to have non zero diagonal element
+			for (int m = i + 1; m < matrix.size(); m++) {
+				if (matrix[m][i] != 0) {
+					swapRows(matrix, m, i);
+					swapRows(inverse, m, i);
+				}
+			}
+		}
+		double divider = matrix[i][i]; //variable which stores a diagonal element
 		for (int j = 0; j < matrix.size(); j++) {//loops through all columns of a given row
 			matrix[i][j] /=divider; //divides equation by the diagonal element
 			inverse[i][j] /= divider;
@@ -123,26 +160,30 @@ int main() {
 		if (wrongInput || data[0].size() != data.size()) cout << "Wrong input\n"; //also checks if matrix is square
 		else {
 			double det = determinant(data);
-			cout << "determinant = " << det << endl;
-
+			cout <<"Determinant is "<< det << endl;
+			
 			if (det != 0) {
-				FILE *output = fopen("output.txt", "w"); //output file is named output.txt
+			
+				
 				vector<vector<double>> inverse = inverseMatrix(data);//vector contains the inverse matrix
+				ofstream output("output.txt");
+				if (output.is_open()) {
+					for (int i = 0; i < data.size(); i++) { //the first loop goes through the all rows 
 
+						for (int j = 0; j < data.size(); j++) { //the second loop goes through the all columns of a given row
 
-				for (int i = 0; i < data.size(); i++) { //the first loop goes through the all rows 
+							output << inverse[i][j] << " "; //prints the [i][j] element of the inverse
 
-					for (int j = 0; j < data.size(); j++) { //the second loop goes through the all columns of a given row
-
-						fprintf(output, "%6.4f ", inverse[i][j]); //prints the [i][j] element of the inverse
-
-
+						}
+						output << "\n";
 					}
-					fprintf(output, "\n"); //goes to a new line after printing the row
 
-
+					output.close();
 				}
-				fclose(output);
+				else {
+					cout << "Unable to open file!\n";
+					exit(1);
+				}
 			}
 			else cout << "matrix doesnt have inverse!\n";
 		}
