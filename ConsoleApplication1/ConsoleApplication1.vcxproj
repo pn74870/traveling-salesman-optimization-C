@@ -146,7 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="optimisationN.cpp" />
+    <ClCompile Include="OptimisationGBplaces.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="matrix.txt" />

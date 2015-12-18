@@ -34,7 +34,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="optimisationN.cpp">
+    <ClCompile Include="OptimisationGBplaces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
